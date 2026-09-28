@@ -4,6 +4,8 @@ import logging
 import pandas as pd
 import json
 
+from dbconnect.insert import insert_product
+
 
 INPUT_FILE = "product_urls.csv"
 OUTPUT_FILE = "laptop_details.csv"
@@ -184,6 +186,14 @@ def main():
                 url
             )
 
+            # Insert this individual product into MySQL
+            insert_product(product_data)
+
+            logger.info(
+                "Product scraped successfully: %s",
+                url
+            )
+
         except Exception as e:
 
             logger.error(
@@ -195,6 +205,11 @@ def main():
             print(
                 "Failed:",
                 url
+            )
+
+            print(
+                "Error:",
+                e
             )
 
 
